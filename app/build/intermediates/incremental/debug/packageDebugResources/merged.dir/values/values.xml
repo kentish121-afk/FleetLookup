@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ic_launcher_background">#1A237E</color>
+    <string name="app_name">Fleet Lookup</string>
+    <style name="Theme.FleetLookup" parent="android:Theme.Material.Light.NoActionBar"/>
+</resources>

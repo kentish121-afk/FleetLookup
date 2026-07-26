@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("org.jetbrains.kotlin.plugin.serialization")
+    id("com.github.triplet.play")
 }
 android {
     namespace = "com.example.fleetlookup"
@@ -20,6 +21,25 @@ android {
     }
     kotlinOptions { jvmTarget = "17" }
     buildFeatures { compose = true }
+
+    signingConfigs {
+        create("release") {
+            // These properties can be set in your global gradle.properties or via CLI
+            storeFile = file(project.findProperty("RELEASE_STORE_FILE") ?: "release.keystore")
+            storePassword = project.findProperty("RELEASE_STORE_PASSWORD") as String?
+            keyAlias = project.findProperty("RELEASE_KEY_ALIAS") as String?
+            keyPassword = project.findProperty("RELEASE_KEY_PASSWORD") as String?
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
 }
 dependencies {
     val composeBom = platform("androidx.compose:compose-bom:2024.10.01")
@@ -34,3 +54,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 }
+
+play {
+    serviceAccountCredentials.set(file("service-account.json"))
+    track.set("internal") // Default to internal sharing for safety
+}
+

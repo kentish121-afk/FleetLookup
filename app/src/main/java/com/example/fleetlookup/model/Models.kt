@@ -24,6 +24,6 @@ data class Vehicle(
 }
 
 @Serializable data class VehicleType(val name: String? = null, val fuel: String? = null, @SerialName("double_decker") val doubleDecker: Boolean? = null, val electric: Boolean? = null)
-@Serializable data class Livery(val name: String? = null)
+@Serializable data class Livery(val name: String? = null, val colour: String? = null)
 @Serializable data class Operator(val id: String? = null, val name: String? = null)
 @Serializable data class Garage(val name: String? = null)
